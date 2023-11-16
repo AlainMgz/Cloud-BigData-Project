@@ -1,2 +1,2 @@
 # Cloud-BigData-Project
-World population growth is raising major questions in today's society, sparking fears in some people and being used in a variety of political discussions. With our project, we want to analyze the past data on population and natality in all world countries and with that try to predict the evolution for the future. 
+The US stock market is the center of world finance, and its actions impact the entire world economy. In this project we will take a look at a large set of data about every stock in the various US markets and make analysis on performance, link them to historical context and look at their consequences.
