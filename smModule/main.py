@@ -1,3 +1,5 @@
+import subprocess
+
 print("Welcome to the US Stock Market analysis sofware. If you want to exit, you can type [quit] at any input in the program.")
 
 while True:
@@ -33,7 +35,22 @@ while True:
         if stat_choice == 1:
             print("Best performer")
         elif stat_choice == 2:
-            print("Worst performer")
+            while True:
+                print("Please choose the time frame: [1] Day | [2] Month | [3] Year | [4] All Time | [b] Go back")
+                inp = input("Enter your choice: ")
+                try:
+                    if inp == "quit":
+                        exit()
+                    elif inp == "b":
+                        break
+                    else:
+                        time_frame = int(inp)
+                except ValueError:
+                    print("Invalid input. Please enter an integer.")
+                    continue
+
+                if time_frame == 4:
+                    subprocess.call(["spark-submit", "worst.py", "-at"])
         elif stat_choice == 3:
             print("Most stable")
     
