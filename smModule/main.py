@@ -8,8 +8,7 @@ def clear_screen():
         os.system('clear')
 
 def print_welcome():
-    print("""
-╔═════════════════════════════════════════════════════════════╗
+    print("""╔═════════════════════════════════════════════════════════════╗
 ║           Welcome to the US Stock Market Analysis           ║
 ║                  Press any key to continue                  ║
 ╚═════════════════════════════════════════════════════════════╝""")
@@ -78,7 +77,15 @@ def main():
                         print("Invalid input. Please enter an integer.")
                         continue
 
-                    if time_frame == 4:
+                    if time_frame == 1:
+                        if market_choice == 1:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "-nq", "-day"])
+                        elif market_choice == 2:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "-ny", "-day"])
+                        elif market_choice == 3:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "-b", "-day"])
+
+                    elif time_frame == 4:
                         if market_choice == 1:
                             subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "-nq", "-at"])
                         elif market_choice == 2:
