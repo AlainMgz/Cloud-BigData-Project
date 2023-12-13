@@ -79,19 +79,35 @@ def main():
 
                     if time_frame == 1:
                         if market_choice == 1:
-                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "-nq", "-day"])
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "--nasdaq", "--day"])
                         elif market_choice == 2:
-                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "-ny", "-day"])
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "--nyse", "--day"])
                         elif market_choice == 3:
-                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "-b", "-day"])
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "-b", "--day"])
+
+                    elif time_frame == 2:
+                        if market_choice == 1:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "--nasdaq", "--month"])
+                        elif market_choice == 2:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "--nyse", "--month"])
+                        elif market_choice == 3:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "-b", "--month"])
+
+                    elif time_frame == 3:
+                        if market_choice == 1:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "--nasdaq", "--year"])
+                        elif market_choice == 2:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "--nyse", "--year"])
+                        elif market_choice == 3:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "-b", "--year"])
 
                     elif time_frame == 4:
                         if market_choice == 1:
-                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "-nq", "-at"])
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "--nasdaq", "--all-time"])
                         elif market_choice == 2:
-                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "-ny", "-at"])
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "--nyse", "--all-time"])
                         elif market_choice == 3:
-                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "-b", "-at"])
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "-b", "--all-time"])
                     input("Press any key to continue ")
             elif stat_choice == 3:
                 print("Most stable")
