@@ -4,7 +4,7 @@ import os
 import sys
 
 
-spark = SparkSession.builder.appName("worst performer").getOrCreate()
+spark = SparkSession.builder.appName("best performer").getOrCreate()
 spark.sparkContext.setLogLevel("OFF")
 if os.name == 'nt':
     os.system('cls')
@@ -14,7 +14,7 @@ else:
 market_choice = sys.argv[1]
 time_frame = sys.argv[2]
 
-def worst_all_time(market):
+def best_all_time(market):
 
     if market == "both":
         folder_path = "stock_market_data/nasdaq/csv/"
@@ -28,9 +28,9 @@ def worst_all_time(market):
         files = [f for f in list_of_files if os.path.isfile(os.path.join(folder_path, f))]
         file_count = len(files)
 
-    worst_perf = 0
-    worst_perf_stock = ""
-    worst_percentage = 0
+    best_perf = 0
+    best_perf_stock = ""
+    best_percentage = 0
 
     i = 0
     # Iterate through all CSV files in the folder
@@ -53,16 +53,16 @@ def worst_all_time(market):
             if isinstance(first_open, float) and isinstance(last_adj_close, float) and first_open > 0:
                 all_time_perf_tmp = last_adj_close - first_open
                 percentage_tmp = (all_time_perf_tmp / first_open) * 100
-                if percentage_tmp < worst_percentage:
-                    worst_perf = all_time_perf_tmp
-                    worst_percentage = percentage_tmp
-                    worst_perf_stock = file_name.strip(".csv")
+                if percentage_tmp > best_percentage:
+                    best_perf = all_time_perf_tmp
+                    best_percentage = percentage_tmp
+                    best_perf_stock = file_name.strip(".csv")
             print(f"\r\033[KAnalysing files [{i}/{file_count}]", flush=True, end='')
             i += 1
 
-    print(f"\r\033[KThe stock {worst_perf_stock} has the worst all time performance: {worst_perf} ({worst_percentage}%)")
+    print(f"\r\033[KThe stock {best_perf_stock} has the best all time performance: {best_perf} ({best_percentage}%)")
 
-def worst_year(market):
+def best_year(market):
     if market == "both":
         folder_path = "stock_market_data/nasdaq/csv/"
         folder_path_2 = "stock_market_data/nyse/csv/"
@@ -75,10 +75,10 @@ def worst_year(market):
         files = [f for f in list_of_files if os.path.isfile(os.path.join(folder_path, f))]
         file_count = len(files)
 
-    worst_perf = 0
-    worst_perf_stock = ""
-    worst_percentage = 0
-    worst_perf_year = ""
+    best_perf = 0
+    best_perf_stock = ""
+    best_percentage = 0
+    best_perf_year = ""
 
     i = 0
     for file_name in files:
@@ -115,18 +115,18 @@ def worst_year(market):
                 if isinstance(adj_close, float) and isinstance(open, float) and open > 0:
                     perf_tmp = adj_close - open
                     percentage_tmp = (perf_tmp / open) * 100
-                    if percentage_tmp < worst_percentage:
-                        worst_perf = perf_tmp
-                        worst_percentage = percentage_tmp
-                        worst_perf_stock = file_name.strip(".csv")
-                        worst_perf_year = year
+                    if percentage_tmp > best_percentage:
+                        best_perf = perf_tmp
+                        best_percentage = percentage_tmp
+                        best_perf_stock = file_name.strip(".csv")
+                        best_perf_year = year
 
             print(f"\r\033[KAnalysing files [{i}/{file_count}]", flush=True, end='')
             i += 1
 
-    print(f"\r\033[KThe stock {worst_perf_stock} has the worst yearly performance ever: {worst_perf} ({worst_percentage}%) on {worst_perf_year}")
+    print(f"\r\033[KThe stock {best_perf_stock} has the best yearly performance ever: {best_perf} ({best_percentage}%) on {best_perf_year}")
 
-def worst_month(market):
+def best_month(market):
     if market == "both":
         folder_path = "stock_market_data/nasdaq/csv/"
         folder_path_2 = "stock_market_data/nyse/csv/"
@@ -139,10 +139,10 @@ def worst_month(market):
         files = [f for f in list_of_files if os.path.isfile(os.path.join(folder_path, f))]
         file_count = len(files)
 
-    worst_perf = 0
-    worst_perf_stock = ""
-    worst_percentage = 0
-    worst_perf_month = ""
+    best_perf = 0
+    best_perf_stock = ""
+    best_percentage = 0
+    best_perf_month = ""
 
     i = 0
     for file_name in files:
@@ -179,18 +179,18 @@ def worst_month(market):
                 if isinstance(adj_close, float) and isinstance(open, float) and open > 0:
                     perf_tmp = adj_close - open
                     percentage_tmp = (perf_tmp / open) * 100
-                    if percentage_tmp < worst_percentage:
-                        worst_perf = perf_tmp
-                        worst_percentage = percentage_tmp
-                        worst_perf_stock = file_name.strip(".csv")
-                        worst_perf_month = month
+                    if percentage_tmp > best_percentage:
+                        best_perf = perf_tmp
+                        best_percentage = percentage_tmp
+                        best_perf_stock = file_name.strip(".csv")
+                        best_perf_month = month
 
             print(f"\r\033[KAnalysing files [{i}/{file_count}]", flush=True, end='')
             i += 1
 
-    print(f"\r\033[KThe stock {worst_perf_stock} has the worst monthly performance ever: {worst_perf} ({worst_percentage}%) on {worst_perf_month}")
+    print(f"\r\033[KThe stock {best_perf_stock} has the best monthly performance ever: {best_perf} ({best_percentage}%) on {best_perf_month}")
 
-def worst_day(market):
+def best_day(market):
     if market == "both":
         folder_path = "stock_market_data/nasdaq/csv/"
         folder_path_2 = "stock_market_data/nyse/csv/"
@@ -203,10 +203,10 @@ def worst_day(market):
         files = [f for f in list_of_files if os.path.isfile(os.path.join(folder_path, f))]
         file_count = len(files)
 
-    worst_perf = 0
-    worst_perf_stock = ""
-    worst_percentage = 0
-    worst_perf_day = ""
+    best_perf = 0
+    best_perf_stock = ""
+    best_percentage = 0
+    best_perf_day = ""
 
     i = 0
     for file_name in files:
@@ -231,41 +231,41 @@ def worst_day(market):
                 if isinstance(adj_close, float) and isinstance(open, float) and open > 0:
                     day_perf_tmp = adj_close - open
                     percentage_tmp = (day_perf_tmp / open) * 100
-                    if percentage_tmp < worst_percentage:
-                        worst_perf = day_perf_tmp
-                        worst_percentage = percentage_tmp
-                        worst_perf_stock = file_name.strip(".csv")
-                        worst_perf_day = day
+                    if percentage_tmp > best_percentage:
+                        best_perf = day_perf_tmp
+                        best_percentage = percentage_tmp
+                        best_perf_stock = file_name.strip(".csv")
+                        best_perf_day = day
 
             print(f"\r\033[KAnalysing files [{i}/{file_count}]", flush=True, end='')
             i += 1
 
-    print(f"\r\033[KThe stock {worst_perf_stock} has the worst daily performance ever: {worst_perf} ({worst_percentage}%) on {worst_perf_day}")
+    print(f"\r\033[KThe stock {best_perf_stock} has the best daily performance ever: {best_perf} ({best_percentage}%) on {best_perf_day}")
 
 if market_choice == "-b":
-    if time_frame == "---all-time":
-        worst_all_time("both")
+    if time_frame == "--all-time":
+        best_all_time("both")
     elif time_frame == "--day":
-        worst_day("both")
+        best_day("both")
     elif time_frame == "--month":
-        worst_month("both")
+        best_month("both")
     elif time_frame == "--year":
-        worst_year("both")
+        best_year("both")
 elif market_choice == "--nasdaq":
     if time_frame == "--all-time":
-        worst_all_time("nasdaq")
+        best_all_time("nasdaq")
     elif time_frame == "--day":
-        worst_day("nasdaq")
+        best_day("nasdaq")
     elif time_frame == "--month":
-        worst_month("nasdaq")
+        best_month("nasdaq")
     elif time_frame == "--year":
-        worst_year("nasdaq")
+        best_year("nasdaq")
 elif market_choice == "--nyse":
     if time_frame == "--all-time":
-        worst_all_time("nyse")
+        best_all_time("nyse")
     elif time_frame == "--day":
-        worst_day("nyse")
+        best_day("nyse")
     elif time_frame == "--month":
-        worst_month("nyse")
+        best_month("nyse")
     elif time_frame == "--year":
-        worst_year("nyse")
+        best_year("nyse")

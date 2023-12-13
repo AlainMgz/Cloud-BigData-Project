@@ -1,5 +1,6 @@
 import subprocess
 import os
+import time
 
 def clear_screen():
     if os.name == 'nt':
@@ -60,7 +61,53 @@ def main():
                 continue
 
             if stat_choice == 1:
-                print("Best performer")
+                while True:
+                    clear_screen()
+                    time_frame = choose_time_frame()
+
+                    try:
+                        if time_frame == "quit":
+                            exit()
+                        elif time_frame == "b":
+                            break
+                        else:
+                            time_frame = int(time_frame)
+                    except ValueError:
+                        print("Invalid input. Please enter an integer.")
+                        continue
+
+                    if time_frame == 1:
+                        if market_choice == 1:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/best.py", "--nasdaq", "--day"])
+                        elif market_choice == 2:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/best.py", "--nyse", "--day"])
+                        elif market_choice == 3:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/best.py", "-b", "--day"])
+
+                    elif time_frame == 2:
+                        if market_choice == 1:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/best.py", "--nasdaq", "--month"])
+                        elif market_choice == 2:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/best.py", "--nyse", "--month"])
+                        elif market_choice == 3:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/best.py", "-b", "--month"])
+
+                    elif time_frame == 3:
+                        if market_choice == 1:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/best.py", "--nasdaq", "--year"])
+                        elif market_choice == 2:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/best.py", "--nyse", "--year"])
+                        elif market_choice == 3:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/best.py", "-b", "--year"])
+
+                    elif time_frame == 4:
+                        if market_choice == 1:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/best.py", "--nasdaq", "--all-time"])
+                        elif market_choice == 2:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/best.py", "--nyse", "--all-time"])
+                        elif market_choice == 3:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/best.py", "-b", "--all-time"])
+                    input("Press any key to continue ")
             elif stat_choice == 2:
                 while True:
                     clear_screen()
@@ -110,7 +157,53 @@ def main():
                             subprocess.call(["spark-submit", "smModule/perf_certain_period/worst.py", "-b", "--all-time"])
                     input("Press any key to continue ")
             elif stat_choice == 3:
-                print("Most stable")
+                while True:
+                    clear_screen()
+                    time_frame = choose_time_frame()
+
+                    try:
+                        if time_frame == "quit":
+                            exit()
+                        elif time_frame == "b":
+                            break
+                        else:
+                            time_frame = int(time_frame)
+                    except ValueError:
+                        print("Invalid input. Please enter an integer.")
+                        continue
+
+                    if time_frame == 1:
+                        if market_choice == 1:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/stable.py", "--nasdaq", "--day"])
+                        elif market_choice == 2:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/stable.py", "--nyse", "--day"])
+                        elif market_choice == 3:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/stable.py", "-b", "--day"])
+
+                    elif time_frame == 2:
+                        if market_choice == 1:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/stable.py", "--nasdaq", "--month"])
+                        elif market_choice == 2:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/stable.py", "--nyse", "--month"])
+                        elif market_choice == 3:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/stable.py", "-b", "--month"])
+
+                    elif time_frame == 3:
+                        if market_choice == 1:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/stable.py", "--nasdaq", "--year"])
+                        elif market_choice == 2:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/stable.py", "--nyse", "--year"])
+                        elif market_choice == 3:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/stable.py", "-b", "--year"])
+
+                    elif time_frame == 4:
+                        if market_choice == 1:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/stable.py", "--nasdaq", "--all-time"])
+                        elif market_choice == 2:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/stable.py", "--nyse", "--all-time"])
+                        elif market_choice == 3:
+                            subprocess.call(["spark-submit", "smModule/perf_certain_period/stable.py", "-b", "--all-time"])
+                    input("Press any key to continue ")
         
 if __name__ == "__main__":
     main()
