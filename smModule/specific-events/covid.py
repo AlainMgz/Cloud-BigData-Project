@@ -235,11 +235,62 @@ def good_worst_day():
     print(f"\r\033[KThe stock {best_perf_stock} has the best performance on the{best_perf_year} with: {best_perf} ({best_percentage}%)")
     print(f"\r\033[KBut the stock {best_perf_stock2} has the greatest upgrade on the{best_perf_year} with: {best_upgrade} ({best_percentage_up}%)")
 
-good_worst_day()
 
+def average_evol():
 
+    date_event = "2020-03-20"
+    folder_path = "../../stock_market_data/nasdaq/csv/"
+    folder_path_2 = "../../stock_market_data/nyse/csv/"
+    list_of_files = os.listdir(folder_path) + os.listdir(folder_path_2)
+    files = [f for f in list_of_files if (os.path.isfile(os.path.join(folder_path, f)) or os.path.isfile(os.path.join(folder_path_2, f)))]
+    file_count = len(files)
+    
+    div = 0
+    percentage_tot = 0
+    i=0
 
+    for file_name in files:
+        if file_name.endswith(".csv"):
+            if os.path.isfile(os.path.join(folder_path, file_name)):
+                input_file_path = os.path.join(folder_path, file_name)
+            else:
+                input_file_path = os.path.join(folder_path_2, file_name)
 
+            # Read the CSV file into a DataFrame
+            df = spark.read.csv(input_file_path, header=True, inferSchema=True)
+
+            # Convert the 'Date' column to a DateType
+            df = df.withColumn("Date", F.to_date(F.col("Date"), "dd-MM-yyyy"))
+            
+            df = df.filter(df["Date"] == date_event)
+
+            # Aggregate the open and close values for each month
+            df = df.groupBy("Date").agg(
+                F.first("Open").alias("Open"),
+                F.last("Adjusted Close").alias("Adjusted Close")
+            )
+            
+
+            # Extract relevant values
+            rdd = df.rdd
+            for row in rdd.collect():
+                open = row["Open"]
+                adj_close = row["Adjusted Close"]
+
+                if isinstance(adj_close, float) and isinstance(open, float) and open > 0:
+                    perf_tmp = adj_close - open
+                    percentage_tmp = (perf_tmp / open) * 100
+
+                    percentage_tot += percentage_tmp
+                    div += 1                 
+
+            print(f"\r\033[KAnalysing files [{i}/{file_count}]", flush=True, end='')
+            i += 1
+    res = percentage_tot/div
+    print(f"\r\033[KThe {date_event} was the worst day for the US market (using the Dow Jones indice) during the covid period, it has an average lost of: ({res}%)")
+ 
+
+average_evol()
 
 
 
