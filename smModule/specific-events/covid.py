@@ -26,6 +26,7 @@ def best_perf():
     best_perf = 0
     best_perf_stock = ""
     best_percentage = 0
+    best_perf_year = ""
     i=0
 
     for file_name in files:
@@ -46,32 +47,20 @@ def best_perf():
             
             df = df.filter(df["Date"] == date_event)
 
-            # Aggregate the open and close values for each month
-            df = df.groupBy("Date").agg(
-                F.first("Open").alias("Open"),
-                F.last("Adjusted Close").alias("Adjusted Close")
-            )
-            
-
-            # Extract relevant values
-            rdd = df.rdd
-            for row in rdd.collect():
-                open = row["Open"]
-                adj_close = row["Adjusted Close"]
-                year = row["Date"]
-                if isinstance(adj_close, float) and isinstance(open, float) and open > 0:
-                    perf_tmp = adj_close - open
-                    percentage_tmp = (perf_tmp / open) * 100
+            if df.count() > 0 :
+                first_open = df.first()["Open"]
+                last_adj_close = df.select("Adjusted Close").tail(1)[0][0]
+                if isinstance(first_open, float) and isinstance(last_adj_close, float) and first_open > 0:
+                    all_time_perf_tmp = last_adj_close - first_open
+                    percentage_tmp = (all_time_perf_tmp / first_open) * 100
                     if percentage_tmp > best_percentage:
-                        best_perf = perf_tmp
+                        best_perf = all_time_perf_tmp
                         best_percentage = percentage_tmp
                         best_perf_stock = file_name.strip(".csv")
-                        best_perf_year = year
-
             print(f"\r\033[KAnalysing files [{i}/{file_count}]", flush=True, end='')
             i += 1
 
-    print(f"\r\033[KThe stock {best_perf_stock} has the best performance during the covid period: {best_perf} ({best_percentage}%) on {best_perf_year}")
+    print(f"\r\033[KThe stock {best_perf_stock} has the best performance during the covid crisis : {best_perf} ({best_percentage}%)")
 
 def worst_perf():
 
@@ -85,6 +74,7 @@ def worst_perf():
     worst_perf = 0
     worst_perf_stock = ""
     worst_percentage = 0
+    worst_perf_year = ""
     i=0
 
     for file_name in files:
@@ -139,7 +129,7 @@ def worst_day():
     worst_perf = 0
     worst_percentage = 0
     worst_perf_day = ""
-    input_file = "../../stock_market_data/Dow_Jones.csv" ###like this or just the folder before and if csv?
+    input_file = "../../stock_market_data/Dow_Jones.csv"
     # Read the CSV file into a DataFrame
     df = spark.read.csv(input_file, header=True, inferSchema=True)
     df = df.withColumn("Date", F.to_date(F.col("Date"), "dd-MM-yyyy"))
@@ -180,6 +170,7 @@ def good_worst_day():
     best_upgrade = 0
     best_percentage_up = 0
     best_perf_stock2 = ""
+    best_perf_year = ""
     i=0
 
     for file_name in files:
@@ -232,8 +223,8 @@ def good_worst_day():
             print(f"\r\033[KAnalysing files [{i}/{file_count}]", flush=True, end='')
             i += 1
 
-    print(f"\r\033[KThe stock {best_perf_stock} has the best performance on the{best_perf_year} with: {best_perf} ({best_percentage}%)")
-    print(f"\r\033[KBut the stock {best_perf_stock2} has the greatest upgrade on the{best_perf_year} with: {best_upgrade} ({best_percentage_up}%)")
+    print(f"\r\033[KThe stock {best_perf_stock} has the best performance on the {best_perf_year} with: {best_perf} ({best_percentage}%)")
+    print(f"\r\033[KBut the stock {best_perf_stock2} has the greatest upgrade on the {best_perf_year} with: {best_upgrade} ({best_percentage_up}%)")
 
 
 def average_evol():
@@ -290,7 +281,12 @@ def average_evol():
     print(f"\r\033[KThe {date_event} was the worst day for the US market (using the Dow Jones index) during the covid period, it has an average lost of: ({res}%)")
  
 
+best_perf()
 worst_perf()
+worst_day()
+good_worst_day()
+average_evol()
+
 
 
 
