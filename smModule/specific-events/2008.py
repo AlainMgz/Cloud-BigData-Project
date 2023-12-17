@@ -114,7 +114,7 @@ def worst_day():
 
 def good_worst_day():
 
-    date_event = "2020-03-20" ###depend de worst_day()
+    date_event = "2008-10-15" ###depend de worst_day()
     folder_path = "stock_market_data/nasdaq/csv/"
     folder_path_2 = "stock_market_data/nyse/csv/"
     list_of_files = os.listdir(folder_path) + os.listdir(folder_path_2)
@@ -183,3 +183,4 @@ def good_worst_day():
 
 
 worst_day()
+good_worst_day()

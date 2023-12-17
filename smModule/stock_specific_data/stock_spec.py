@@ -46,6 +46,11 @@ def stock_spec_stats():
     plt.grid(True)
     plt.show()
 
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
 
     df_month = df_month.groupBy("Date").agg(
         F.first("Open").alias("Open"),

@@ -112,7 +112,7 @@ def worst_day():
 
 def good_worst_day():
 
-    date_event = "2020-03-20" ###depend de worst_day
+    date_event = "2001-09-17" ###depend de worst_day
     folder_path = "stock_market_data/nasdaq/csv/"
     folder_path_2 = "stock_market_data/nyse/csv/"
     list_of_files = os.listdir(folder_path) + os.listdir(folder_path_2)
@@ -178,5 +178,6 @@ def good_worst_day():
     print(f"\r\033[KThe stock {best_perf_stock} has the best performance on the {best_perf_year} with: {best_perf} ({best_percentage}%)")
     print(f"\r\033[KBut the stock {best_perf_stock2} has the greatest upgrade on the {best_perf_year} with: {best_upgrade} ({best_percentage_up}%)")
 
+
+worst_day()
 good_worst_day()
- 
