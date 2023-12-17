@@ -10,12 +10,12 @@ def clear_screen():
 def print_welcome():
     print("""╔═════════════════════════════════════════════════════════════╗
 ║           Welcome to the US Stock Market Analysis           ║
-║                  Press enter to continue                  ║
+║                  Press enter to continue                    ║
 ╚═════════════════════════════════════════════════════════════╝""")
     input("")
 
 def choose_option():
-    print("Please choose a field of study:\n[1] Information about a specific stock | [2] General market analytics | [quit] Quit")
+    print("Please choose a field of study:\n[1] Information about a specific stock | [2] General market analytics | [3] Historical events | [quit] Quit")
     return input("Enter your choice: ")
 
 def choose_stock():
@@ -23,6 +23,10 @@ def choose_stock():
 
 def choose_market():
     print("Please choose which market you want to study:\n[1] Nasdaq | [2] NYSE | [3] Both | [b] Back | [quit] Quit")
+    return input("Enter your choice: ")
+
+def choose_historical_period():
+    print("Please choose which historical period you want to study:\n[1] 9/11 Attacks | [2] 2008 Financial Crisis | [3] Covid | [b] Back | [quit] Quit")
     return input("Enter your choice: ")
 
 def choose_statistic():
@@ -237,6 +241,27 @@ def main():
                                 elif market_choice == 3:
                                     subprocess.call(["spark-submit", "smModule/perf_certain_period/stable.py", "-b", "--all-time"])
                             input("Press enter to continue ")
+        elif option_choice == 3:
+            clear_screen()  
+            event = choose_historical_period()
+            try:
+                if event == "quit":
+                    exit()
+                elif event == "b":
+                    break
+                else:
+                    event = int(event)
+            except ValueError:
+                print("Invalid input. Please enter an integer.")
+                continue
+
+            if event == 1:
+                subprocess.call(["spark-submit", "smModule/specific-events/2001.py"])
+            elif event == 2:
+                subprocess.call(["spark-submit", "smModule/specific-events/2008.py"])
+            elif event == 3:
+                subprocess.call(["spark-submit", "smModule/specific-events/covid.py"])
+            input("Press enter to continue ")
                 
 if __name__ == "__main__":
     main()

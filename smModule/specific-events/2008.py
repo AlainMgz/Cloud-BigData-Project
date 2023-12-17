@@ -17,8 +17,8 @@ else:
 def best_perf():
 
     
-    folder_path = "../../stock_market_data/nasdaq/csv/"
-    folder_path_2 = "../../stock_market_data/nyse/csv/"
+    folder_path = "stock_market_data/nasdaq/csv/"
+    folder_path_2 = "stock_market_data/nyse/csv/"
     list_of_files = os.listdir(folder_path) + os.listdir(folder_path_2)
     files = [f for f in list_of_files if (os.path.isfile(os.path.join(folder_path, f)) or os.path.isfile(os.path.join(folder_path_2, f)))]
     file_count = len(files)
@@ -68,8 +68,8 @@ def best_perf():
 def worst_perf():
 
     
-    folder_path = "../../stock_market_data/nasdaq/csv/"
-    folder_path_2 = "../../stock_market_data/nyse/csv/"
+    folder_path = "stock_market_data/nasdaq/csv/"
+    folder_path_2 = "stock_market_data/nyse/csv/"
     list_of_files = os.listdir(folder_path) + os.listdir(folder_path_2)
     files = [f for f in list_of_files if (os.path.isfile(os.path.join(folder_path, f)) or os.path.isfile(os.path.join(folder_path_2, f)))]
     file_count = len(files)
@@ -132,7 +132,7 @@ def worst_day():
     worst_perf = 0
     worst_percentage = 0
     worst_perf_day = ""
-    input_file = "../../stock_market_data/Dow_Jones.csv" ###like this or just the folder before and if csv?
+    input_file = "stock_market_data/Dow_Jones.csv" ###like this or just the folder before and if csv?
     # Read the CSV file into a DataFrame
     df = spark.read.csv(input_file, header=True, inferSchema=True)
     df = df.withColumn("Date", F.to_date(F.col("Date"), "dd-MM-yyyy"))
@@ -162,8 +162,8 @@ def worst_day():
 def good_worst_day():
 
     date_event = "2020-03-20"
-    folder_path = "../../stock_market_data/nasdaq/csv/"
-    folder_path_2 = "../../stock_market_data/nyse/csv/"
+    folder_path = "stock_market_data/nasdaq/csv/"
+    folder_path_2 = "stock_market_data/nyse/csv/"
     list_of_files = os.listdir(folder_path) + os.listdir(folder_path_2)
     files = [f for f in list_of_files if (os.path.isfile(os.path.join(folder_path, f)) or os.path.isfile(os.path.join(folder_path_2, f)))]
     file_count = len(files)
@@ -233,8 +233,8 @@ def good_worst_day():
 def average_evol():
 
     date_event = "2020-03-20"
-    folder_path = "../../stock_market_data/nasdaq/csv/"
-    folder_path_2 = "../../stock_market_data/nyse/csv/"
+    folder_path = "stock_market_data/nasdaq/csv/"
+    folder_path_2 = "stock_market_data/nyse/csv/"
     list_of_files = os.listdir(folder_path) + os.listdir(folder_path_2)
     files = [f for f in list_of_files if (os.path.isfile(os.path.join(folder_path, f)) or os.path.isfile(os.path.join(folder_path_2, f)))]
     file_count = len(files)
