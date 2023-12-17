@@ -1,9 +1,11 @@
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
+import matplotlib.pyplot as plt
 import os
 import sys
 import shutil
 import re
+from datetime import datetime
 
 spark = SparkSession.builder.appName("stock spec").getOrCreate()
 spark.sparkContext.setLogLevel("OFF")
@@ -28,6 +30,22 @@ def stock_spec_stats():
 
     df_month = df_date.withColumn("Date", F.date_format("Date", "MM-yyyy"))
     df_year = df_date.withColumn("Date", F.date_format("Date", "yyyy"))
+
+    unused_cols = ["Low","Open","Volume","High","Close"]
+    df_year_plot = df_date.drop(*unused_cols)
+    rdd_year_plot = df_year_plot.rdd
+    last_year = rdd_year_plot.collect()[-1][0].year
+    rdd_year_plot = rdd_year_plot.filter(lambda x: x[0].year == last_year)
+    
+    year_data = rdd_year_plot.collect()
+    x_values, y_values = zip(*year_data)
+    plt.plot(x_values, y_values, marker='o', linestyle='-')
+    plt.xlabel('Date')
+    plt.ylabel('Value (USD)')
+    plt.title(f"Stock Value ${stock_name.strip('.csv')} - {market_name.capitalize()}")
+    plt.grid(True)
+    plt.show()
+
 
     df_month = df_month.groupBy("Date").agg(
         F.first("Open").alias("Open"),

@@ -242,26 +242,27 @@ def main():
                                     subprocess.call(["spark-submit", "smModule/perf_certain_period/stable.py", "-b", "--all-time"])
                             input("Press enter to continue ")
         elif option_choice == 3:
-            clear_screen()  
-            event = choose_historical_period()
-            try:
-                if event == "quit":
-                    exit()
-                elif event == "b":
-                    break
-                else:
-                    event = int(event)
-            except ValueError:
-                print("Invalid input. Please enter an integer.")
-                continue
+            while True:
+                clear_screen()  
+                event = choose_historical_period()
+                try:
+                    if event == "quit":
+                        exit()
+                    elif event == "b":
+                        break
+                    else:
+                        event = int(event)
+                except ValueError:
+                    print("Invalid input. Please enter an integer.")
+                    continue
 
-            if event == 1:
-                subprocess.call(["spark-submit", "smModule/specific-events/2001.py"])
-            elif event == 2:
-                subprocess.call(["spark-submit", "smModule/specific-events/2008.py"])
-            elif event == 3:
-                subprocess.call(["spark-submit", "smModule/specific-events/covid.py"])
-            input("Press enter to continue ")
+                if event == 1:
+                    subprocess.call(["spark-submit", "smModule/specific-events/2001.py"])
+                elif event == 2:
+                    subprocess.call(["spark-submit", "smModule/specific-events/2008.py"])
+                elif event == 3:
+                    subprocess.call(["spark-submit", "smModule/specific-events/covid.py"])
+                input("Press enter to continue ")
                 
 if __name__ == "__main__":
     main()
