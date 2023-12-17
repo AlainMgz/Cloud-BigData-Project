@@ -130,7 +130,7 @@ def worst_perf():
             print(f"\r\033[KAnalysing files [{i}/{file_count}]", flush=True, end='')
             i += 1
 
-    print(f"\r\033[KThe stock {worst_perf_stock} has the worst performance during the covid period: {worst_perf} ({worst_percentage}%) on {best_perf_year}")
+    print(f"\r\033[KThe stock {worst_perf_stock} has the worst performance during the covid period: {worst_perf} ({worst_percentage}%) on {worst_perf_year}")
 
 
 def worst_day():
@@ -163,7 +163,7 @@ def worst_day():
                 worst_percentage = percentage_tmp
                 worst_perf_day = day
 
-    print(f"\r\033[KThe {worst_perf_day} was the worst day for the US market (using the Dow Jones indice) during the covid period, it has a lost of: {worst_perf} ({worst_percentage}%)")
+    print(f"\r\033[KThe {worst_perf_day} was the worst day for the US market (using the Dow Jones index) during the covid period, it has a lost of: {worst_perf} ({worst_percentage}%)")
 
 def good_worst_day():
 
@@ -287,10 +287,10 @@ def average_evol():
             print(f"\r\033[KAnalysing files [{i}/{file_count}]", flush=True, end='')
             i += 1
     res = percentage_tot/div
-    print(f"\r\033[KThe {date_event} was the worst day for the US market (using the Dow Jones indice) during the covid period, it has an average lost of: ({res}%)")
+    print(f"\r\033[KThe {date_event} was the worst day for the US market (using the Dow Jones index) during the covid period, it has an average lost of: ({res}%)")
  
 
-average_evol()
+worst_perf()
 
 
 
