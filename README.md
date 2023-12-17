@@ -3,6 +3,7 @@ The US stock market is the center of world finance, and its actions impact the e
 
 ### Setup
 Python 3.9.6 and Apache Spark 3.5.0
+
 MatPlotLib : `pip install matplotlib`
 
 ### Run the program
